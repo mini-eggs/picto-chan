@@ -7,10 +7,8 @@
   "private": false,
   "scripts": {
     "dev": "npm run dev-client & npm run dev-server & nodemon dist/server.js",
-    "dev-client":
-      "cross-env NODE_ENV=development webpack-dev-server --config webpack.client --open --hot",
-    "dev-server":
-      "cross-env NODE_ENV=development webpack --config webpack.server --watch",
+    "dev-client": "cross-env NODE_ENV=development webpack-dev-server --config webpack.client --open --hot",
+    "dev-server": "cross-env NODE_ENV=development webpack --config webpack.server --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "clean": "rm -rf node_modules build dist"
@@ -46,5 +44,9 @@
     "webpack-node-externals": "^1.6.0",
     "whatwg-fetch": "^2.0.3"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

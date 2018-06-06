@@ -2,7 +2,10 @@ import {
   POSTS_RECEIVED,
   POST_SELECT,
   PREVIOUS_POST,
-  NEXT_POST
+  NEXT_POST,
+  PRELOAD_RESET,
+  PRELOAD_INIT,
+  PRELOAD_COMPLETE
 } from "../constants/Posts";
 
 export const requestPosts = ({ board, thread }) => async dispatch => {
@@ -22,4 +25,16 @@ export const previousPost = () => ({
 
 export const nextPost = () => ({
   type: NEXT_POST
+});
+
+export const preloadInit = () => ({
+  type: PRELOAD_INIT
+});
+
+export const preloadReset = () => ({
+  type: PRELOAD_RESET
+});
+
+export const preloadComplete = () => ({
+  type: PRELOAD_COMPLETE
 });

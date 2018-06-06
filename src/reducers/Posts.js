@@ -2,14 +2,19 @@ import {
   POSTS_RECEIVED,
   POST_SELECT,
   PREVIOUS_POST,
-  NEXT_POST
+  NEXT_POST,
+  PRELOAD_RESET,
+  PRELOAD_INIT,
+  PRELOAD_COMPLETE,
+  PRELOAD_STATES
 } from "../constants/Posts";
 
 const initial = {
   posts: [],
   selected: undefined,
   next: false,
-  back: false
+  back: false,
+  preload: PRELOAD_STATES.UNINITIALIZED
 };
 
 const transformPosts = ({ board, thread, posts }) => {
@@ -23,11 +28,7 @@ const transformPosts = ({ board, thread, posts }) => {
   return transformed;
 };
 
-const getSelectedSubState = ({
-  posts,
-  index = 0,
-  previous = initial.selected
-}) => {
+const getSelectedSubState = ({ posts, index = 0, previous = initial.selected }) => {
   const back = index > 0 && posts.length > 1;
   const next = index < posts.length - 1 && posts.length > 1;
   const selected = posts[index] || previous;
@@ -36,13 +37,24 @@ const getSelectedSubState = ({
 
 const getCurrentIndex = ({ selected, posts }) =>
   posts.reduce(
-    (finalIndex, currentItem, currentIndex) =>
-      selected.name === currentItem.name ? currentIndex : finalIndex,
+    (finalIndex, currentItem, currentIndex) => (selected.name === currentItem.name ? currentIndex : finalIndex),
     0
   );
 
 const reducer = (state = initial, { type, payload }) => {
   switch (type) {
+    case PRELOAD_RESET: {
+      return { ...state, preload: PRELOAD_STATES.UNINITIALIZED };
+    }
+
+    case PRELOAD_INIT: {
+      return { ...state, preload: PRELOAD_STATES.LOADING };
+    }
+
+    case PRELOAD_COMPLETE: {
+      return { ...state, preload: PRELOAD_STATES.COMPLETE };
+    }
+
     case POSTS_RECEIVED: {
       const posts = transformPosts(payload);
       const selectedState = getSelectedSubState({ posts });
