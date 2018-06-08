@@ -9,7 +9,6 @@
 import MediaComponent from "../components/Media";
 import NavigationComponent from "../components/Navigation";
 import PostsConnect from "../containers/Posts";
-import { preload } from "../client/preload";
 
 const component = {
   name: "app-post",
@@ -46,6 +45,7 @@ const component = {
       if (this.shouldPreload) {
         try {
           this.preloadInit();
+          const { preload } = await import("../client/preload");
           await preload(this.posts);
           this.preloadComplete();
         } catch (e) {
