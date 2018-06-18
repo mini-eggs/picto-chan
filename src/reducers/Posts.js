@@ -6,15 +6,21 @@ import {
   PRELOAD_RESET,
   PRELOAD_INIT,
   PRELOAD_COMPLETE,
+  TOGGLE_ASPECT_RATIO,
+  TOGGLE_AUTO_PLAY,
   PRELOAD_STATES
 } from "../constants/Posts";
+import { toggleAspectRatio } from "../actions/Posts";
 
 const initial = {
   posts: [],
   selected: undefined,
   next: false,
   back: false,
-  preload: PRELOAD_STATES.UNINITIALIZED
+  preload: PRELOAD_STATES.UNINITIALIZED,
+  aspect_ratio: "contain",
+  autoplay: false,
+  autoplayTime: 5 * 1000
 };
 
 const transformPosts = ({ board, thread, posts }) => {
@@ -31,7 +37,7 @@ const transformPosts = ({ board, thread, posts }) => {
 const getSelectedSubState = ({ posts, index = 0, previous = initial.selected }) => {
   const back = index > 0 && posts.length > 1;
   const next = index < posts.length - 1 && posts.length > 1;
-  const selected = posts[index] || previous;
+  const selected = posts[index] || posts[0] || previous;
   return { selected, back, next };
 };
 
@@ -41,10 +47,23 @@ const getCurrentIndex = ({ selected, posts }) =>
     0
   );
 
+const aspectRatioToggleRules = {
+  contain: "cover",
+  cover: "contain"
+};
+
 const reducer = (state = initial, { type, payload }) => {
   switch (type) {
     case PRELOAD_RESET: {
       return { ...state, preload: PRELOAD_STATES.UNINITIALIZED };
+    }
+
+    case TOGGLE_ASPECT_RATIO: {
+      return { ...state, aspect_ratio: aspectRatioToggleRules[state.aspect_ratio] };
+    }
+
+    case TOGGLE_AUTO_PLAY: {
+      return { ...state, autoplay: !state.autoplay };
     }
 
     case PRELOAD_INIT: {

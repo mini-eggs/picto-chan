@@ -1,31 +1,67 @@
 <template>
   <section @click.stop="toggle">
 
-    <div v-if="selectedPost" @click.stop class="btn-container" >
+    <div v-if="selectedPost" @click.stop class="btn-container">
 
-      <md-button :disabled="!displayBack" class="md-icon-button md-primary md-raised md-fab md-mini" @click="previousPost">
-        <md-icon>arrow_back</md-icon>
-      </md-button>
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <md-button :disabled="!displayBack" class="md-icon-button md-primary md-raised md-fab md-mini" @click="previousPost">
+            <md-icon>arrow_back</md-icon>
+          </md-button>
+        </div>
+      </transition>
 
-      <md-button :disabled="!displayNext" class="md-icon-button md-primary md-raised md-fab md-mini" @click="nextPost">
-        <md-icon>arrow_forward</md-icon>
-      </md-button>
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <md-button :disabled="!displayNext" class="md-icon-button md-primary md-raised md-fab md-mini" @click="nextPost">
+            <md-icon>arrow_forward</md-icon>
+          </md-button>
+        </div>
+      </transition>
 
-      <a ref="downloadBtn" :href=" selectedPost.image " :download=" selectedPost.name ">
-        <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
-          <md-icon>file_download</md-icon>
-        </md-button>
-      </a>
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <a ref="downloadBtn" :href=" selectedPost.image " :download=" selectedPost.name ">
+            <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
+              <md-icon>file_download</md-icon>
+            </md-button>
+          </a>
+        </div>
+      </transition>
 
-      <router-link to="/about">
-        <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
-          <md-icon>settings</md-icon>
-        </md-button>
-      </router-link>
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggleAspectRatio">
+            <md-icon>aspect_ratio</md-icon>
+          </md-button>
+        </div>
+      </transition>
 
-      <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggle">
-        <md-icon>menu</md-icon>
-      </md-button>
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggleAutoPlay">
+            <md-icon>replay_5</md-icon>
+          </md-button>
+        </div>
+      </transition>
+
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <router-link to="/about">
+            <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
+              <md-icon>settings</md-icon>
+            </md-button>
+          </router-link>
+        </div>
+      </transition>
+
+      <transition name="NavigationFadeTransition">
+        <div v-if="mouseIsActive" class="button-transition-container">
+          <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggle">
+            <md-icon>menu</md-icon>
+          </md-button>
+        </div>
+      </transition>
 
     </div>
 
@@ -47,12 +83,15 @@ import PostsConnect from "../containers/Posts";
 const component = {
   name: "app-navigation",
 
-  data: () => ({ show: false, tabIndex: -1 }),
+  data: () => ({ show: false, tabIndex: -1, mouseIsActive: false }),
 
   mounted() {
     this.$bus.$on("key:arrow_down", this.handleArrowDownPress);
     this.$bus.$on("key:arrow_up", this.handleArrowUpPress);
     this.$bus.$on("key:esc", this.handleEscPress);
+    this.$bus.$on("key:q", this.toggleAspectRatio);
+    this.$bus.$on("mouse:active", this.handleMouseActive);
+    this.$bus.$on("mouse:inactive", this.handleMouseInactive);
   },
 
   watch: {
@@ -67,6 +106,14 @@ const component = {
   },
 
   methods: {
+    handleMouseActive() {
+      this.mouseIsActive = true;
+    },
+
+    handleMouseInactive() {
+      this.mouseIsActive = false;
+    },
+
     handleEscPress() {
       this.show = false;
     },
@@ -124,6 +171,10 @@ section {
     top: 10px;
     right: 5px;
     overflow: visible;
+  }
+
+  .button-transition-container {
+    display: inline-block;
   }
 
   nav {

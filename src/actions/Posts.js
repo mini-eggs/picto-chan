@@ -5,7 +5,9 @@ import {
   NEXT_POST,
   PRELOAD_RESET,
   PRELOAD_INIT,
-  PRELOAD_COMPLETE
+  PRELOAD_COMPLETE,
+  TOGGLE_ASPECT_RATIO,
+  TOGGLE_AUTO_PLAY
 } from "../constants/Posts";
 
 export const requestPosts = ({ board, thread }) => async dispatch => {
@@ -37,4 +39,12 @@ export const preloadReset = () => ({
 
 export const preloadComplete = () => ({
   type: PRELOAD_COMPLETE
+});
+
+export const toggleAspectRatio = () => ({
+  type: TOGGLE_ASPECT_RATIO
+});
+
+export const toggleAutoPlay = () => ({
+  type: TOGGLE_AUTO_PLAY
 });

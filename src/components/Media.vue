@@ -1,11 +1,11 @@
 <template>
-  <div v-if="!flicker && selectedPost" :style="{ backgroundImage: `url(${selectedPost.thumbnail})` }" >
+  <div v-if="!flicker && selectedPost" :style="{ backgroundImage: `url(${selectedPost.thumbnail})` }" :class="{ [aspect_ratio]: true }">
 
     <!-- photo -->
-    <img v-if=" photo[ selectedPost.ext ] " class="item" :src="selectedPost.image" />
+    <img v-if=" photo[ selectedPost.ext ] " class="item" :class="{ [aspect_ratio]: true }" :src="selectedPost.image" />
 
     <!-- video -->
-    <video @click="toggleVideo" v-if=" video[ selectedPost.ext ] " class="item" autoplay loop controls>
+    <video @ended="handleVideoEnd" @click="toggleVideo" v-if=" video[ selectedPost.ext ] " class="item" :class="{ [aspect_ratio]: true }" autoplay controls>
       <source :src="selectedPost.image" type="video/webm">
     </video>
 
@@ -25,7 +25,8 @@ const initialState = {
   video: {
     ".webm": true
   },
-  flicker: false
+  flicker: false,
+  timeout: setTimeout(() => {}, 1)
 };
 
 const component = {
@@ -36,7 +37,17 @@ const component = {
   watch: {
     selectedPost() {
       this.flicker = true;
-      this.$nextTick(() => (this.flicker = false));
+    },
+
+    flicker(val) {
+      if (val) {
+        this.flicker = false;
+        this.$nextTick(this.checkAutoPlay);
+      }
+    },
+
+    autoplay(val) {
+      this.$nextTick(this.checkAutoPlay);
     }
   },
 
@@ -45,6 +56,25 @@ const component = {
   },
 
   methods: {
+    handleVideoEnd({ target }) {
+      if (this.autoplay) {
+        this.nextPost();
+      } else {
+        target.play();
+      }
+    },
+
+    checkAutoPlay() {
+      clearTimeout(this.timeout);
+      let timeout = setTimeout(() => {}, 1);
+
+      if (this.autoplay && !this.$el.querySelector("video")) {
+        timeout = setTimeout(this.nextPost, this.autoplayTime);
+      }
+
+      this.timeout = timeout;
+    },
+
     toggleVideo() {
       const video = this.$el.querySelector("video");
 
@@ -72,9 +102,16 @@ div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+
+  &.contain {
+    background-size: contain;
+  }
+
+  &.cover {
+    background-size: cover;
+  }
 
   .item {
     position: absolute;
@@ -82,7 +119,14 @@ div {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+
+    &.contain {
+      object-fit: contain;
+    }
+
+    &.cover {
+      object-fit: cover;
+    }
   }
 }
 </style>

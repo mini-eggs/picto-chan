@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import Debounce from "lodash/debounce";
+import Throttle from "lodash/throttle";
+
 const stopEvent = event => {
   event.preventDefault();
   event.stopPropagation();
@@ -14,10 +17,37 @@ const component = {
   name: "app-controls",
 
   mounted() {
-    document.onkeydown = this.handleKeyDown;
+    this.handleMouseActive = Throttle(this.handleMouseActive, 1500);
+    this.handleMouseInactive = Debounce(this.handleMouseInactive, 1500);
+
+    document.addEventListener("keydown", this.handleKeyDown);
+
+    document.addEventListener("mousedown", this.handleMouseActive);
+    document.addEventListener("mousedown", this.handleMouseInactive);
+
+    document.addEventListener("mousemove", this.handleMouseActive);
+    document.addEventListener("mousemove", this.handleMouseInactive);
+  },
+
+  beforeDestroy() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+
+    document.removeEventListener("mousedown", this.handleMouseActive);
+    document.removeEventListener("mousedown", this.handleMouseInactive);
+
+    document.removeEventListener("mousemove", this.handleMouseActive);
+    document.removeEventListener("mousemove", this.handleMouseInactive);
   },
 
   methods: {
+    handleMouseActive() {
+      this.$bus.$emit("mouse:active");
+    },
+
+    handleMouseInactive() {
+      this.$bus.$emit("mouse:inactive");
+    },
+
     handleKeyDown(e) {
       e = e || window.event;
       const key = e.which || e.keyCode;
@@ -60,6 +90,10 @@ const component = {
         case 39: {
           // stopEvent(e);
           this.$bus.$emit("key:arrow_right");
+          break;
+        }
+        case 81: {
+          this.$bus.$emit("key:q");
           break;
         }
         default: {

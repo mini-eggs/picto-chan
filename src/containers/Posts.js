@@ -6,13 +6,18 @@ import {
   nextPost,
   preloadInit,
   preloadComplete,
-  preloadReset
+  preloadReset,
+  toggleAspectRatio,
+  toggleAutoPlay
 } from "../actions/Posts";
 import { PRELOAD_STATES } from "../constants/Posts";
 
 export default connect(
   state => ({
     posts: state.PostsReducer.posts,
+    aspect_ratio: state.PostsReducer.aspect_ratio,
+    autoplay: state.PostsReducer.autoplay,
+    autoplayTime: state.PostsReducer.autoplayTime,
     selectedPost: state.PostsReducer.selected,
     displayBack: state.PostsReducer.back,
     displayNext: state.PostsReducer.next,
@@ -23,9 +28,10 @@ export default connect(
     selectPostByIndex: i => dispatch(selectPostByIndex(i)),
     previousPost: () => dispatch(previousPost()),
     nextPost: () => dispatch(nextPost()),
-    nextPost: () => dispatch(nextPost()),
     preloadInit: () => dispatch(preloadInit()),
     preloadReset: () => dispatch(preloadReset()),
-    preloadComplete: () => dispatch(preloadComplete())
+    preloadComplete: () => dispatch(preloadComplete()),
+    toggleAspectRatio: () => dispatch(toggleAspectRatio()),
+    toggleAutoPlay: () => dispatch(toggleAutoPlay())
   })
 );

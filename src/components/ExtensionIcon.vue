@@ -1,5 +1,5 @@
 <template>
-  <a class="picto-chan-extension" :href="thread" target="_blank">
+  <a class="picto-chan-extension" :href="thread">
     photo_library
   </a>
 </template>
@@ -39,8 +39,7 @@ body {
     position: fixed !important;
     top: 10px !important;
     right: 10px !important;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14),
-      0 3px 1px -2px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12) !important;
     background-color: #3f51b5 !important;
     border-radius: 50% !important;
     overflow: hidden !important;
