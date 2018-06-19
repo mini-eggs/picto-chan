@@ -1,5 +1,5 @@
 <template>
-  <h1>Not Found</h1>
+  <h1 class="ErrorComponent">Not Found</h1>
 </template>
 
 <script>
@@ -10,8 +10,8 @@ const component = {
 export default component;
 </script>
 
-<style scoped lang="scss">
-h1 {
+<style scoped>
+h1.ErrorComponent {
   position: absolute;
   top: 50%;
   left: 50%;

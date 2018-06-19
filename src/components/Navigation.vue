@@ -1,5 +1,5 @@
 <template>
-  <section @click.stop="toggle">
+  <section class="NavigationComponent" @click.stop="toggle">
 
     <div v-if="selectedPost" @click.stop class="btn-container">
 
@@ -164,78 +164,65 @@ const component = {
 export default PostsConnect(component);
 </script>
 
-<style scoped lang="scss">
-section {
-  .btn-container {
-    position: absolute;
-    top: 10px;
-    right: 5px;
-    overflow: visible;
-  }
-
-  .button-transition-container {
-    display: inline-block;
-  }
-
-  nav {
-    background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    ul,
-    li {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    ul {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 100vw;
-      max-height: 80vh;
-      width: 300px;
-      height: 300px;
-      background-color: white;
-      overflow-y: scroll;
-      padding: 5px;
-      border-radius: 4px;
-
-      li {
-        display: inline-block;
-        width: calc(100% / 5 - 10px);
-        margin: 5px;
-
-        button {
-          font-weight: 600;
-          margin: 0;
-          width: 100%;
-          padding: 0;
-          min-width: 0;
-        }
-
-        &:focus {
-          button {
-            background-color: rgba(153, 153, 153, 0.2);
-            text-decoration: none;
-          }
-        }
-      }
-    }
-  }
-
-  > * {
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-
-    ::-webkit-scrollbar {
-      width: 0 !important;
-    }
-  }
+<style scoped >
+section.NavigationComponent .btn-container {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  overflow: visible;
+}
+section.NavigationComponent .button-transition-container {
+  display: inline-block;
+}
+section.NavigationComponent nav {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+section.NavigationComponent nav ul,
+section.NavigationComponent nav li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+section.NavigationComponent nav ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100vw;
+  max-height: 80vh;
+  width: 300px;
+  height: 300px;
+  background-color: white;
+  overflow-y: scroll;
+  padding: 5px;
+  border-radius: 4px;
+}
+section.NavigationComponent nav ul li {
+  display: inline-block;
+  width: calc(100% / 5 - 10px);
+  margin: 5px;
+}
+section.NavigationComponent nav ul li button {
+  font-weight: 600;
+  margin: 0;
+  width: 100%;
+  padding: 0;
+  min-width: 0;
+}
+section.NavigationComponent nav ul li:focus button {
+  background-color: rgba(153, 153, 153, 0.2);
+  text-decoration: none;
+}
+section.NavigationComponent > * {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+section.NavigationComponent > * ::-webkit-scrollbar {
+  width: 0 !important;
 }
 </style>

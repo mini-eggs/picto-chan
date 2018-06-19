@@ -45,7 +45,7 @@
 export default {};
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 section.about {
   color: white;
   max-width: 630px;

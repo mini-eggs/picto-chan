@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!flicker && selectedPost" :style="{ backgroundImage: `url(${selectedPost.thumbnail})` }" :class="{ [aspect_ratio]: true }">
+  <div class="MediaComponent" v-if="!flicker && selectedPost" :style="{ backgroundImage: `url(${selectedPost.thumbnail})` }" :class="{ [aspect_ratio]: true }">
 
     <!-- photo -->
     <img v-if=" photo[ selectedPost.ext ] " class="item" :class="{ [aspect_ratio]: true }" :src="selectedPost.image" />
@@ -94,8 +94,8 @@ const component = {
 export default PostConnect(component);
 </script>
 
-<style scoped lang="scss">
-div {
+<style scoped >
+div.MediaComponent {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -104,29 +104,29 @@ div {
   transform: translate(-50%, -50%);
   background-position: center center;
   background-repeat: no-repeat;
+}
 
-  &.contain {
-    background-size: contain;
-  }
+div.MediaComponent.contain {
+  background-size: contain;
+}
 
-  &.cover {
-    background-size: cover;
-  }
+div.MediaComponent.cover {
+  background-size: cover;
+}
 
-  .item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+div.MediaComponent .item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-    &.contain {
-      object-fit: contain;
-    }
+div.MediaComponent .item.contain {
+  object-fit: contain;
+}
 
-    &.cover {
-      object-fit: cover;
-    }
-  }
+div.MediaComponent .item.cover {
+  object-fit: cover;
 }
 </style>

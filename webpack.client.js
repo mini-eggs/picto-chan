@@ -19,27 +19,11 @@ module.exports = {
         })
       },
       {
-        test: /\.scss$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"]
-      },
-      {
-        test: /\.sass$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader?indentedSyntax"]
-      },
-      {
         test: /\.vue$/,
         loader: "vue-loader",
         options: {
           extractCSS: true,
           loaders: {
-            scss: extractTextPlugin.extract({
-              use: "css-loader!sass-loader",
-              fallback: "vue-style-loader"
-            }),
-            sass: extractTextPlugin.extract({
-              use: "css-loader!sass-loader?indentedSyntax",
-              fallback: "vue-style-loader"
-            }),
             postcss: [require("postcss-cssnext")()]
           }
         }
