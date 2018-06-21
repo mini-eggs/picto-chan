@@ -37,13 +37,11 @@ const component = {
   watch: {
     selectedPost() {
       this.flicker = true;
-    },
 
-    flicker(val) {
-      if (val) {
+      this.$nextTick(() => {
         this.flicker = false;
         this.$nextTick(this.checkAutoPlay);
-      }
+      });
     },
 
     autoplay(val) {

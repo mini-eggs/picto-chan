@@ -27,6 +27,7 @@
             </md-button>
           </a>
         </div>
+        <a v-else class="hidden-btn" ref="downloadBtn" :href="selectedPost.image" :download="selectedPost.name"></a>
       </transition>
 
       <transition name="NavigationFadeTransition">
@@ -224,5 +225,8 @@ section.NavigationComponent > * {
 }
 section.NavigationComponent > * ::-webkit-scrollbar {
   width: 0 !important;
+}
+.hidden-btn {
+  display: none;
 }
 </style>
