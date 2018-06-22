@@ -34,16 +34,22 @@ const transformPosts = ({ board, thread, posts }) => {
   return transformed;
 };
 
-const getSelectedSubState = ({ posts, index = 0, previous = initial.selected }) => {
+const getSelectedSubState = ({ posts, index = 0 }) => {
+  if (index < 0) {
+    index = posts.length - 1;
+  } else if (index > posts.length - 1) {
+    index = 0;
+  }
   const back = index > 0 && posts.length > 1;
   const next = index < posts.length - 1 && posts.length > 1;
-  const selected = posts[index] || posts[0] || previous;
+  const selected = posts[index];
   return { selected, back, next };
 };
 
 const getCurrentIndex = ({ selected, posts }) =>
   posts.reduce(
-    (finalIndex, currentItem, currentIndex) => (selected.name === currentItem.name ? currentIndex : finalIndex),
+    (finalIndex, currentItem, currentIndex) =>
+      selected.name === currentItem.name ? currentIndex : finalIndex,
     0
   );
 
@@ -59,7 +65,10 @@ const reducer = (state = initial, { type, payload }) => {
     }
 
     case TOGGLE_ASPECT_RATIO: {
-      return { ...state, aspect_ratio: aspectRatioToggleRules[state.aspect_ratio] };
+      return {
+        ...state,
+        aspect_ratio: aspectRatioToggleRules[state.aspect_ratio]
+      };
     }
 
     case TOGGLE_AUTO_PLAY: {

@@ -69,88 +69,90 @@ md-icon {
   }
 }
 
-.NavigationFadeTransition-enter-active,
-.NavigationFadeTransition-leave-active {
-  opacity: 1;
-  transform: translateY(0);
-}
-.NavigationFadeTransition-enter,
-.NavigationFadeTransition-leave-to {
-  opacity: 0;
-  transform: translateY(-100px);
-}
-
-/* forwards */
-
-.NavigationFadeTransition-enter-active:nth-of-type(1),
-.NavigationFadeTransition-leave-active:nth-of-type(1) {
-  transition: all 700ms;
+@keyframes SlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(2),
-.NavigationFadeTransition-leave-active:nth-of-type(2) {
-  transition: all 600ms;
+@keyframes SlideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(3),
-.NavigationFadeTransition-leave-active:nth-of-type(3) {
-  transition: all 500ms;
+.button-transition-container {
+  animation-name: SlideUp;
+  animation-fill-mode: forwards;
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(4),
-.NavigationFadeTransition-leave-active:nth-of-type(4) {
-  transition: all 400ms;
+.button-transition-container.is-active {
+  animation-name: SlideDown;
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(5),
-.NavigationFadeTransition-leave-active:nth-of-type(5) {
-  transition: all 300ms;
+.button-transition-container:nth-of-type(1) {
+  animation-duration: 100ms;
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(6),
-.NavigationFadeTransition-leave-active:nth-of-type(6) {
-  transition: all 200ms;
+.button-transition-container:nth-of-type(2) {
+  animation-duration: 200ms;
 }
 
-.NavigationFadeTransition-enter-active:nth-of-type(7),
-.NavigationFadeTransition-leave-active:nth-of-type(7) {
-  transition: all 100ms;
+.button-transition-container:nth-of-type(3) {
+  animation-duration: 300ms;
 }
 
-/* backwards */
-
-.NavigationFadeTransition-enter:nth-of-type(1),
-.NavigationFadeTransition-leave-to:nth-of-type(1) {
-  transition: all 150ms;
+.button-transition-container:nth-of-type(4) {
+  animation-duration: 400ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(2),
-.NavigationFadeTransition-leave-to:nth-of-type(2) {
-  transition: all 300ms;
+.button-transition-container:nth-of-type(5) {
+  animation-duration: 500ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(3),
-.NavigationFadeTransition-leave-to:nth-of-type(3) {
-  transition: all 450ms;
+.button-transition-container:nth-of-type(6) {
+  animation-duration: 600ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(4),
-.NavigationFadeTransition-leave-to:nth-of-type(4) {
-  transition: all 600ms;
+.button-transition-container:nth-of-type(7) {
+  animation-duration: 700ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(5),
-.NavigationFadeTransition-leave-to:nth-of-type(5) {
-  transition: all 750ms;
+.button-transition-container.is-active:nth-of-type(1) {
+  animation-duration: 700ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(6),
-.NavigationFadeTransition-leave-to:nth-of-type(6) {
-  transition: all 900ms;
+.button-transition-container.is-active:nth-of-type(2) {
+  animation-duration: 600ms;
 }
 
-.NavigationFadeTransition-enter:nth-of-type(6),
-.NavigationFadeTransition-leave-to:nth-of-type(6) {
-  transition: all 1050ms;
+.button-transition-container.is-active:nth-of-type(3) {
+  animation-duration: 500ms;
+}
+
+.button-transition-container.is-active:nth-of-type(4) {
+  animation-duration: 400ms;
+}
+
+.button-transition-container.is-active:nth-of-type(5) {
+  animation-duration: 300ms;
+}
+
+.button-transition-container.is-active:nth-of-type(6) {
+  animation-duration: 200ms;
+}
+
+.button-transition-container.is-active:nth-of-type(7) {
+  animation-duration: 100ms;
 }
 </style>

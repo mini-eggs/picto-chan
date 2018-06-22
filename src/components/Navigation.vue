@@ -3,66 +3,51 @@
 
     <div v-if="selectedPost" @click.stop class="btn-container">
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <md-button :disabled="!displayBack" class="md-icon-button md-primary md-raised md-fab md-mini" @click="previousPost">
             <md-icon>arrow_back</md-icon>
           </md-button>
         </div>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <md-button :disabled="!displayNext" class="md-icon-button md-primary md-raised md-fab md-mini" @click="nextPost">
             <md-icon>arrow_forward</md-icon>
           </md-button>
         </div>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <a ref="downloadBtn" :href=" selectedPost.image " :download=" selectedPost.name ">
             <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
               <md-icon>file_download</md-icon>
             </md-button>
           </a>
         </div>
-        <a v-else class="hidden-btn" ref="downloadBtn" :href="selectedPost.image" :download="selectedPost.name"></a>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggleAspectRatio">
             <md-icon>aspect_ratio</md-icon>
           </md-button>
         </div>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggleAutoPlay">
             <md-icon>replay_5</md-icon>
           </md-button>
         </div>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <router-link to="/about">
             <md-button class="md-icon-button md-primary md-raised md-fab md-mini">
               <md-icon>settings</md-icon>
             </md-button>
           </router-link>
         </div>
-      </transition>
 
-      <transition name="NavigationFadeTransition">
-        <div v-if="mouseIsActive" class="button-transition-container">
+        <div :class="{ 'is-active': mouseIsActive }" class="button-transition-container">
           <md-button class="md-icon-button md-primary md-raised md-fab md-mini" @click="toggle">
             <md-icon>menu</md-icon>
           </md-button>
         </div>
-      </transition>
 
     </div>
 
@@ -225,8 +210,5 @@ section.NavigationComponent > * {
 }
 section.NavigationComponent > * ::-webkit-scrollbar {
   width: 0 !important;
-}
-.hidden-btn {
-  display: none;
 }
 </style>
