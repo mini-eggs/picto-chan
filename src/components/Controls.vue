@@ -7,6 +7,7 @@
 <script>
 import Debounce from "lodash/debounce";
 import Throttle from "lodash/throttle";
+import Keybinds from "keybinds";
 
 const stopEvent = event => {
   event.preventDefault();
@@ -19,22 +20,16 @@ const component = {
   mounted() {
     this.handleMouseActive = Throttle(this.handleMouseActive, 1500);
     this.handleMouseInactive = Debounce(this.handleMouseInactive, 1500);
-
-    document.addEventListener("keydown", this.handleKeyDown);
-
     document.addEventListener("mousedown", this.handleMouseActive);
     document.addEventListener("mousedown", this.handleMouseInactive);
-
     document.addEventListener("mousemove", this.handleMouseActive);
     document.addEventListener("mousemove", this.handleMouseInactive);
+    this.setupKeyListeners();
   },
 
   beforeDestroy() {
-    document.removeEventListener("keydown", this.handleKeyDown);
-
     document.removeEventListener("mousedown", this.handleMouseActive);
     document.removeEventListener("mousedown", this.handleMouseInactive);
-
     document.removeEventListener("mousemove", this.handleMouseActive);
     document.removeEventListener("mousemove", this.handleMouseInactive);
   },
@@ -48,58 +43,57 @@ const component = {
       this.$bus.$emit("mouse:inactive");
     },
 
-    handleKeyDown(e) {
-      e = e || window.event;
-      const key = e.which || e.keyCode;
+    setupKeyListeners() {
+      Keybinds([], 13, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:enter");
+      });
 
-      switch (key) {
-        case 13: {
-          stopEvent(e);
-          this.$bus.$emit("key:enter");
-          break;
-        }
-        case 9: {
-          stopEvent(e);
-          this.$bus.$emit("key:tab");
-          break;
-        }
-        case 27: {
-          stopEvent(e);
-          this.$bus.$emit("key:esc");
-          break;
-        }
-        case 38: {
-          stopEvent(e);
-          this.$bus.$emit("key:arrow_up");
-          break;
-        }
-        case 40: {
-          this.$bus.$emit("key:arrow_down");
-          break;
-        }
-        case 32: {
-          stopEvent(e);
-          this.$bus.$emit("key:space");
-          break;
-        }
-        case 37: {
-          // stopEvent(e);
-          this.$bus.$emit("key:arrow_left");
-          break;
-        }
-        case 39: {
-          // stopEvent(e);
-          this.$bus.$emit("key:arrow_right");
-          break;
-        }
-        case 81: {
-          this.$bus.$emit("key:q");
-          break;
-        }
-        default: {
-          break;
-        }
-      }
+      Keybinds([], 9, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:tab");
+      });
+
+      Keybinds([], 27, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:esc");
+      });
+
+      Keybinds([], 38, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:arrow_up");
+      });
+
+      Keybinds([], 40, e => {
+        this.$bus.$emit("key:arrow_down");
+      });
+
+      Keybinds([], 32, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:space");
+      });
+
+      Keybinds([], 37, e => {
+        this.$bus.$emit("key:arrow_left");
+      });
+
+      Keybinds([], 39, e => {
+        this.$bus.$emit("key:arrow_right");
+      });
+
+      Keybinds([], 81, e => {
+        this.$bus.$emit("key:q");
+      });
+
+      Keybinds([20], 70, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:arrow_right");
+      });
+
+      Keybinds([20], 66, e => {
+        stopEvent(e);
+        this.$bus.$emit("key:arrow_left");
+      });
     }
   }
 };

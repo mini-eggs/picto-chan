@@ -11,9 +11,11 @@ import {
 } from "../constants/Posts";
 
 export const requestPosts = ({ board, thread }) => async dispatch => {
-  const req = await fetch(`/api/get/posts/${board}/${thread}`);
-  const { posts } = await req.json();
-  dispatch({ type: POSTS_RECEIVED, payload: { board, thread, posts } });
+  if (typeof window !== "undefined") {
+    const req = await fetch(`/api/get/posts/${board}/${thread}`);
+    const { posts } = await req.json();
+    dispatch({ type: POSTS_RECEIVED, payload: { board, thread, posts } });
+  }
 };
 
 export const selectPostByIndex = index => ({
